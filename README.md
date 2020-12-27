@@ -34,9 +34,6 @@ _This page looks best when using [Github's dark mode](https://twitter.com/github
 
 ![My github stats](https://github-readme-stats.vercel.app/api?username=GalGreenfield&title_color=c9d1d9&text_color=c9d1d9&link_color=58a6ff&bg_color=0d1117&hide_border=true&count_private=true&show_icons=true&include_all_commits=true)
 
-New: [TODO: finish configuring in the terminal so it'd pull data from there]
-[![My WakaTime stats](https://github-readme-stats.vercel.app/api/wakatime?username=galgreenfield&title_color=c9d1d9&text_color=c9d1d9&link_color=58a6ff&bg_color=0d1117&hide_border=true&layout=compact)](https://wakatime.com/@GalGreenfield)
-
 ---
 
 _Note: Not all of my work is public_
