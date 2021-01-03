@@ -9,8 +9,8 @@ _This page looks best when using [Github's dark mode](https://twitter.com/github
 ![Arch Linux](http://img.shields.io/badge/-Arch%20Linux-informational?style=for-the-badge&logo=arch-linux&logoColor=white)
 ![Visual Studio Code](http://img.shields.io/badge/-VS%20Code-informational?style=for-the-badge&logo=visual-studio-code&logoColor=white)
 ![GitHub](http://img.shields.io/badge/-Github-informational?style=for-the-badge&logo=github&logoColor=white)
-![React.](http://img.shields.io/badge/-React-informational?style=for-the-badge&logo=react&logoColor=white)
-![Node.js](http://img.shields.io/badge/-Node-informational?style=for-the-badge&logo=node.js&logoColor=white)
+![React](http://img.shields.io/badge/-React-informational?style=for-the-badge&logo=react&logoColor=white)
+![Node.js](http://img.shields.io/badge/-Node.js-informational?style=for-the-badge&logo=node.js&logoColor=white)
 ![JavaScript](http://img.shields.io/badge/-Javascript-informational?style=for-the-badge&logo=javascript&logoColor=white)
 
 <!--
