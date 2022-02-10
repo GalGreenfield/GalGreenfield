@@ -2,7 +2,7 @@
 
 _This page looks best when using [Github's dark mode](https://twitter.com/github/status/1336362679506784256) [(change here)](https://github.com/settings/appearance)_
 
-#### 👋🏻 Hi there! I'm Gal Grünfeld, developer, kind of a data scientist and a superuser of life.
+#### 👋🏻 Hi there! I'm Gal Grünfeld - a developer, a kind of a data scientist and a superuser of life.
 
 #### 🛠️ Some of the tech and tools I use:
 
