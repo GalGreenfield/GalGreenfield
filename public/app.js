@@ -39,7 +39,8 @@ form.addEventListener("submit", async (event) => {
   const formData = new FormData();
   const fileInput = form.querySelector("input[type='file']");
   const selectedFile = fileInput.files[0];
-  const prompt = form.querySelector("textarea[name='prompt']").value.trim();
+  const promptField = form.querySelector("textarea[name='prompt']");
+  const prompt = promptField.value.trim();
 
   if (!prompt) {
     setStatus("Please enter a redesign prompt.", "error");
@@ -90,9 +91,11 @@ form.addEventListener("submit", async (event) => {
     addHistoryItem({
       id: payload.id,
       prompt,
-      createdAt: new Date().toISOString(),
+      createdAt: payload.createdAt,
       downloadUrl: payload.downloadUrl,
     });
+
+    promptField.value = "";
   } catch (error) {
     setStatus(error.message, "error");
   }

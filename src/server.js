@@ -25,45 +25,59 @@ const placeholderModelPath = path.join(__dirname, "..", "data", "placeholder.skp
 const placeholderPreviewPath = path.join(__dirname, "..", "data", "placeholder-preview.svg");
 
 app.use(express.static(path.join(__dirname, "..", "public")));
-app.get("/placeholder-preview.svg", (req, res) => {
-  res.sendFile(placeholderPreviewPath);
-});
 
-app.post("/api/redesign", upload.single("model"), (req, res) => {
-  const prompt = req.body.prompt;
-  if (!prompt || prompt.trim().length === 0) {
-    return res.status(400).json({ message: "Prompt is required." });
+const ensureFile = (filePath, description) => {
+  if (!fs.existsSync(filePath)) {
+    const error = new Error(`${description} is missing at ${filePath}.`);
+    error.statusCode = 500;
+    throw error;
   }
+};
 
-  if (!req.file) {
-    return res.status(400).json({ message: "SketchUp model is required." });
+app.post("/api/redesign", upload.single("model"), (req, res, next) => {
+  try {
+    const prompt = req.body.prompt;
+    if (!prompt || prompt.trim().length === 0) {
+      return res.status(400).json({ message: "Prompt is required." });
+    }
+
+    if (!req.file) {
+      return res.status(400).json({ message: "SketchUp model is required." });
+    }
+
+    ensureFile(placeholderModelPath, "Placeholder model");
+    ensureFile(placeholderPreviewPath, "Placeholder preview");
+
+    const jobId = nanoid();
+    const outputFileName = `redesign-${jobId}.skp`;
+    const outputFilePath = path.join(__dirname, "..", "data", outputFileName);
+    const previewFileName = `preview-${jobId}.svg`;
+    const previewFilePath = path.join(__dirname, "..", "data", previewFileName);
+    const createdAt = new Date().toISOString();
+
+    fs.copyFileSync(placeholderModelPath, outputFilePath);
+    fs.copyFileSync(placeholderPreviewPath, previewFilePath);
+
+    jobs.set(jobId, {
+      id: jobId,
+      prompt,
+      originalFile: req.file.originalname,
+      outputFileName,
+      previewFileName,
+      createdAt,
+    });
+
+    return res.status(201).json({
+      id: jobId,
+      status: "complete",
+      createdAt,
+      message: "Redesign complete. Download the SketchUp file using the link below.",
+      downloadUrl: `/api/download/${jobId}`,
+      previewUrl: `/api/preview/${jobId}`,
+    });
+  } catch (error) {
+    return next(error);
   }
-
-  const jobId = nanoid();
-  const outputFileName = `redesign-${jobId}.skp`;
-  const outputFilePath = path.join(__dirname, "..", "data", outputFileName);
-  const previewFileName = `preview-${jobId}.svg`;
-  const previewFilePath = path.join(__dirname, "..", "data", previewFileName);
-
-  fs.copyFileSync(placeholderModelPath, outputFilePath);
-  fs.copyFileSync(placeholderPreviewPath, previewFilePath);
-
-  jobs.set(jobId, {
-    id: jobId,
-    prompt,
-    originalFile: req.file.originalname,
-    outputFileName,
-    previewFileName,
-    createdAt: new Date().toISOString(),
-  });
-
-  return res.status(201).json({
-    id: jobId,
-    status: "complete",
-    message: "Redesign complete. Download the SketchUp file using the link below.",
-    downloadUrl: `/api/download/${jobId}`,
-    previewUrl: `/api/preview/${jobId}`,
-  });
 });
 
 app.get("/api/jobs/:id", (req, res) => {
@@ -99,7 +113,7 @@ app.use((err, req, res, next) => {
     return res.status(400).json({ message: err.message });
   }
   if (err) {
-    return res.status(400).json({ message: err.message || "Something went wrong." });
+    return res.status(err.statusCode || 400).json({ message: err.message || "Something went wrong." });
   }
   return next();
 });
