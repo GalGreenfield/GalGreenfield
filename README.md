@@ -1,39 +1,39 @@
-# About Me
+# SketchUp Room Redesign App
 
-_This page looks best when using [Github's dark mode](https://twitter.com/github/status/1336362679506784256) [(change here)](https://github.com/settings/appearance)_
+A lightweight demo app that accepts a SketchUp `.skp` file, lets a user describe a new interior style, and returns a redesigned SketchUp model. The current implementation uses a placeholder pipeline so you can plug in your own model-generation workflow later.
 
-#### 👋🏻 Hi there! I'm Gal Grünfeld - a developer, a kind of a data scientist and a superuser of life.
+## Features
 
-#### 🛠️ Some of the tech and tools I use:
+- Upload SketchUp `.skp` files and provide a natural language redesign prompt.
+- Preview each redesign iteration inside the app.
+- Receive a downloadable redesigned SketchUp model.
+- Simple UI that explains the workflow and requirements.
 
-![Arch Linux](http://img.shields.io/badge/-Arch%20Linux-informational?style=for-the-badge&logo=arch-linux&logoColor=white)
-![Visual Studio Code](http://img.shields.io/badge/-VS%20Code-informational?style=for-the-badge&logo=visual-studio-code&logoColor=white)
-![GitHub](http://img.shields.io/badge/-Github-informational?style=for-the-badge&logo=github&logoColor=white)
-![React](http://img.shields.io/badge/-React-informational?style=for-the-badge&logo=react&logoColor=white)
-![Node.js](http://img.shields.io/badge/-Node.js-informational?style=for-the-badge&logo=node.js&logoColor=white)
-![JavaScript](http://img.shields.io/badge/-Javascript-informational?style=for-the-badge&logo=javascript&logoColor=white)
+## Getting Started
 
-<!--
-#### Personal setup
-![Manjaro](http://img.shields.io/badge/-Manjaro-informational?style=for-the-badge&logo=manjaro&logoColor=white)
-![KDE](http://img.shields.io/badge/-KDE-informational?style=for-the-badge&logo=KDE&logoColor=white)
--->
+1. Install dependencies:
 
-#### 📤 How to reach me:
+   ```bash
+   npm install
+   ```
 
-[![LinkedIn](http://img.shields.io/badge/-LinkedIn-informational?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/galgreenfield)
-[![email](http://img.shields.io/badge/-Email-informational?style=for-the-badge&logo=gmail&logoColor=white)](mailto:galgreenfield@gmail.com)
+2. Start the server:
 
-#### 💬 I'm also on:
+   ```bash
+   npm start
+   ```
 
-[![My StackOverflow](http://img.shields.io/badge/-StackOverflow-informational?style=for-the-badge&logo=Stack-Overflow&logoColor=white)](https://stackoverflow.com/users/5094787/gal-gr%c3%bcnfeld)
-[![My Superuser](http://img.shields.io/badge/-SuperUser-informational?style=for-the-badge&logo=super-user&logoColor=white)](https://superuser.com/users/630055/gal-gr%c3%bcnfeld)
-[![My StackExchange](http://img.shields.io/badge/-StackExchange-informational?style=for-the-badge&logo=stack-exchange&logoColor=white)](https://stackexchange.com/users/6594572/gal-gr%c3%bcnfeld?tab=accounts)
+3. Open the app at [http://localhost:3000](http://localhost:3000).
 
-#### 📊 Some developer stats:
+## Project Structure
 
-![My github stats](https://github-readme-stats.vercel.app/api?username=GalGreenfield&title_color=c9d1d9&text_color=c9d1d9&link_color=58a6ff&bg_color=0d1117&hide_border=true&count_private=true&show_icons=true&include_all_commits=true)
+- `src/server.js`: Express server with upload, preview, and download APIs.
+- `public/`: Front-end UI.
+- `data/`: Placeholder SketchUp output files and preview image.
 
----
+## Next Steps
 
-_Note: Not all of my work is public_
+- Replace `data/placeholder.skp` with a real SketchUp export pipeline.
+- Render real preview imagery from your SketchUp automation workflow.
+- Persist job metadata to a database for long-running redesigns.
+- Add authentication and storage for multi-user usage.
