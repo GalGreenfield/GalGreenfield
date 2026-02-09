@@ -10,34 +10,56 @@
     <main class="container">
       <header class="hero">
         <p class="eyebrow">SketchUp Redesign Studio</p>
-        <h1>Upload a room, describe the vibe, and get a redesigned SketchUp model.</h1>
+        <h1>Upload a room, describe the vibe, and iterate on a redesigned SketchUp model.</h1>
         <p class="subhead">
           This demo app accepts a <strong>.skp</strong> file, runs a mock redesign pipeline, and returns a
-          downloadable SketchUp model.
+          downloadable SketchUp model with an in-browser preview.
         </p>
       </header>
 
-      <section class="panel">
-        <form id="redesign-form">
-          <label class="field">
-            <span>SketchUp model (.skp)</span>
-            <input type="file" name="model" accept=".skp" required />
-          </label>
+      <section class="panel layout">
+        <div>
+          <form id="redesign-form">
+            <label class="field">
+              <span>SketchUp model (.skp)</span>
+              <input type="file" name="model" accept=".skp" />
+              <small class="helper">Upload once, then iterate using new prompts.</small>
+            </label>
 
-          <label class="field">
-            <span>Redesign prompt</span>
-            <textarea
-              name="prompt"
-              rows="4"
-              placeholder="e.g. Warm Scandinavian living room with oak floors, soft lighting, and built-in shelving."
-              required
-            ></textarea>
-          </label>
+            <label class="field">
+              <span>Redesign prompt</span>
+              <textarea
+                name="prompt"
+                rows="4"
+                placeholder="e.g. Warm Scandinavian living room with oak floors, soft lighting, and built-in shelving."
+                required
+              ></textarea>
+            </label>
 
-          <button type="submit">Generate redesign</button>
-        </form>
+            <button type="submit">Generate redesign</button>
+          </form>
 
-        <div id="status" class="status" aria-live="polite"></div>
+          <div id="status" class="status" aria-live="polite"></div>
+
+          <div class="iterations">
+            <h2>Iteration history</h2>
+            <ul id="history" class="history">
+              <li class="empty">No redesigns yet. Upload a SketchUp model to start.</li>
+            </ul>
+          </div>
+        </div>
+
+        <aside class="preview">
+          <h2>Model preview</h2>
+          <div class="preview-frame">
+            <img
+              id="preview-image"
+              src="/placeholder-preview.svg"
+              alt="SketchUp preview placeholder"
+            />
+          </div>
+          <p class="note">Preview updates after each redesign iteration.</p>
+        </aside>
       </section>
 
       <section class="panel info">

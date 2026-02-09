@@ -5,6 +5,7 @@ A lightweight demo app that accepts a SketchUp `.skp` file, lets a user describe
 ## Features
 
 - Upload SketchUp `.skp` files and provide a natural language redesign prompt.
+- Preview each redesign iteration inside the app.
 - Receive a downloadable redesigned SketchUp model.
 - Simple UI that explains the workflow and requirements.
 
@@ -26,12 +27,13 @@ A lightweight demo app that accepts a SketchUp `.skp` file, lets a user describe
 
 ## Project Structure
 
-- `src/server.js`: Express server with upload and download APIs.
+- `src/server.js`: Express server with upload, preview, and download APIs.
 - `public/`: Front-end UI.
-- `data/`: Placeholder SketchUp output files.
+- `data/`: Placeholder SketchUp output files and preview image.
 
 ## Next Steps
 
 - Replace `data/placeholder.skp` with a real SketchUp export pipeline.
+- Render real preview imagery from your SketchUp automation workflow.
 - Persist job metadata to a database for long-running redesigns.
 - Add authentication and storage for multi-user usage.

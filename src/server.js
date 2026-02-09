@@ -22,8 +22,12 @@ const upload = multer({
 
 const jobs = new Map();
 const placeholderModelPath = path.join(__dirname, "..", "data", "placeholder.skp");
+const placeholderPreviewPath = path.join(__dirname, "..", "data", "placeholder-preview.svg");
 
 app.use(express.static(path.join(__dirname, "..", "public")));
+app.get("/placeholder-preview.svg", (req, res) => {
+  res.sendFile(placeholderPreviewPath);
+});
 
 app.post("/api/redesign", upload.single("model"), (req, res) => {
   const prompt = req.body.prompt;
@@ -38,14 +42,18 @@ app.post("/api/redesign", upload.single("model"), (req, res) => {
   const jobId = nanoid();
   const outputFileName = `redesign-${jobId}.skp`;
   const outputFilePath = path.join(__dirname, "..", "data", outputFileName);
+  const previewFileName = `preview-${jobId}.svg`;
+  const previewFilePath = path.join(__dirname, "..", "data", previewFileName);
 
   fs.copyFileSync(placeholderModelPath, outputFilePath);
+  fs.copyFileSync(placeholderPreviewPath, previewFilePath);
 
   jobs.set(jobId, {
     id: jobId,
     prompt,
     originalFile: req.file.originalname,
     outputFileName,
+    previewFileName,
     createdAt: new Date().toISOString(),
   });
 
@@ -54,6 +62,7 @@ app.post("/api/redesign", upload.single("model"), (req, res) => {
     status: "complete",
     message: "Redesign complete. Download the SketchUp file using the link below.",
     downloadUrl: `/api/download/${jobId}`,
+    previewUrl: `/api/preview/${jobId}`,
   });
 });
 
@@ -73,6 +82,16 @@ app.get("/api/download/:id", (req, res) => {
 
   const filePath = path.join(__dirname, "..", "data", job.outputFileName);
   return res.download(filePath, job.outputFileName);
+});
+
+app.get("/api/preview/:id", (req, res) => {
+  const job = jobs.get(req.params.id);
+  if (!job) {
+    return res.status(404).json({ message: "Job not found." });
+  }
+
+  const filePath = path.join(__dirname, "..", "data", job.previewFileName);
+  return res.sendFile(filePath);
 });
 
 app.use((err, req, res, next) => {
